@@ -53,48 +53,48 @@ public class Scene2Controller {
 
     @FXML
     public void onConnect() throws Exception {
-    String Host=HostID.getText();
-    int Port=Integer.parseInt(PortID.getText());
-    Socket socket=new Socket(Host,Port);
+        String Host=HostID.getText();
+        int Port=Integer.parseInt(PortID.getText());
+        Socket socket=new Socket(Host,Port);
         InputStream is = socket.getInputStream();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
         OutputStream os =socket.getOutputStream();
-         pw = new PrintWriter(os, true);
+        pw = new PrintWriter(os, true);
         String delimiter = "#";
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
-                try {
-                    String reponse= br.readLine();
+                    try {
+                        String reponse= br.readLine();
 
 /////////////////////////////////////////
 
-                    // Split the received data using the delimiter
-                   // String[] parts = reponse.split(delimiter);
-                    // Extract the prompt message and the JSON string
-                   // String promptMessage = parts[0];
-                    //String Clients = parts[1];
+                        // Split the received data using the delimiter
+                        // String[] parts = reponse.split(delimiter);
+                        // Extract the prompt message and the JSON string
+                        // String promptMessage = parts[0];
+                        //String Clients = parts[1];
 
 
-                 //   System.out.println(parts);
+                        //   System.out.println(parts);
 //////////////////////////////////////////
 
-                    /////////////
-                   Platform.runLater(()->{
-                       if(reponse.contains("#client")){
-                           ContactsID.getItems().add(reponse);
-                           ContactsID.refresh();
-                       }
-                       else{
+                        /////////////
+                        Platform.runLater(()->{
+                            if(reponse.contains("#client")){
+                                ContactsID.getItems().add(reponse);
+                                ContactsID.refresh();
+                            }
+                            else{
 
-                           testView.getItems().add(reponse);
-                       }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                                testView.getItems().add(reponse);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }).start();
